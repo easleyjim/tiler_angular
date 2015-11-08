@@ -1,43 +1,56 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>My AngularJS App</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
-  <link rel="stylesheet" href="app.css">
-  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
-</head>
-<body>
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-  </ul>
+<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tiler Angular</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" type="text/css" href="app.css">
+  </head>
+  <body ng-app="AngularTilerApp" ng-controller="GameController" ng-cloak>
+    <md-toolbar layout="row" layout-align="space-between center">
+        <!--The left side-->
+        <span> <h2 class="md-toolbar-tools"> Angular Tiler </h2></span>
+        <span> <h2 class="md-toolbar-tools"> Score: {{getScore();}} </h2></span>
+        <!--The right side-->
+        <span>
+            <md-button aria-label="New Game" ng-click="newGame()"> New Game </md-button>
+            <md-button aria-label="Leaderboard"> Leaderboard </md-button>
+        </span>
+    </md-toolbar>
 
-  <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-  <![endif]-->
+    <md-grid-list
+      md-cols="20" md-row-height="1:1"
+      md-gutter="0px"
+      ng-repeat="row in range(max_height)">
+            <md-grid-tile
+              ng-class="{'green' : isTileGreen(col, row),
+              'yellow' : isTileYellow(col, row),
+              'blue' : isTileBlue(col, row),
+              'purple' : isTilePurple(col, row),
+              'red' : isTileRed(col, row),
+              'selectedtile' : isSelected(col, row),
+              'black' : isTileRemoved(col, row)
+              }"
+              md-rowspan="1" md-colspan="1"
+              ng-repeat="col in range(max_width)"
+              ng-click="clickTile(col, row)"
 
-  <div ng-view></div>
+            </md-grid-tile>
+    </md-grid-list>
 
-  <div>Angular seed app: v<span app-version></span></div>
 
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="app.js"></script>
-  <script src="view1/view1.js"></script>
-  <script src="view2/view2.js"></script>
-  <script src="components/version/version.js"></script>
-  <script src="components/version/version-directive.js"></script>
-  <script src="components/version/interpolate-filter.js"></script>
-</body>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-aria/angular-aria.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/angular-material/angular-material.js"></script>
+    <script src="app.js"></script>
+    <script src="js/controllers/GameController.js"></script>
+    <script src="js/services/GameBoard.js"></script>
+  </body>
 </html>
